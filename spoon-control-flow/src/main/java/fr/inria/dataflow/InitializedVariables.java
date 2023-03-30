@@ -73,7 +73,17 @@ public class InitializedVariables {
 		return initialized;
 	}
 
+	public Set<CtVariableReference> getDefined() {
+		return defined;
+	}
+
+	public Set<CtVariableReference> getUsed() {
+		return used;
+	}
+
 	Set<CtVariableReference> initialized = new HashSet<>();
+	Set<CtVariableReference> defined = new HashSet<>();
+	Set<CtVariableReference> used = new HashSet<>();
 
 	public void run(ControlFlowNode node) {
 		//Already calculated factors
@@ -90,6 +100,8 @@ public class InitializedVariables {
 		InitFactors fp = initialized(node, factors, includeDefinedInNode);
 		initialized = fp.defined;
 		initialized.addAll(fp.used);
+		defined = fp.defined;
+		used = fp.used;
 	}
 
 	private Set<CtVariableReference> defined(ControlFlowNode n) {
